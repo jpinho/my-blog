@@ -1,0 +1,59 @@
+---
+title: "Hello World: Building This Blog with Next.js"
+description: "How I built this blog from scratch with Next.js, Tailwind CSS, and MDX. A clean, fast, static site deployed on Vercel."
+date: 2026-02-10
+tags: [nextjs, typescript, tailwind]
+featured: true
+---
+
+This is the first post on my new blog. Built with Next.js 15, Tailwind CSS v4, and MDX for content.
+
+## Why Next.js?
+
+I wanted a React-based setup with full control over the rendering pipeline. Next.js gives me static generation for blog posts, API routes for search, and the flexibility to add dynamic features later without rewriting everything.
+
+## The Stack
+
+Here's what powers this site:
+
+- **Next.js 15** with App Router and static generation
+- **Tailwind CSS v4** for styling with dark mode support
+- **MDX** for content with code highlighting
+- **Vercel** for deployment with automatic deploys from GitHub
+
+## Code Highlighting
+
+Here's a quick TypeScript example:
+
+```typescript
+interface Post {
+  title: string;
+  slug: string;
+  date: string;
+  tags: string[];
+}
+
+function getLatestPosts(posts: Post[], limit: number): Post[] {
+  return posts
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, limit);
+}
+```
+
+And some Rust because why not:
+
+```rust
+use std::collections::HashMap;
+
+fn word_count(text: &str) -> HashMap<&str, usize> {
+    let mut counts = HashMap::new();
+    for word in text.split_whitespace() {
+        *counts.entry(word).or_insert(0) += 1;
+    }
+    counts
+}
+```
+
+## What's Next
+
+More posts on TypeScript patterns, Rust explorations, AI/ML engineering, and distributed systems. Stay tuned.

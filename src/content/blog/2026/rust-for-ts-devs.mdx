@@ -1,0 +1,66 @@
+---
+title: "Rust for TypeScript Developers: The Mental Model Shift"
+description: "Coming from TypeScript to Rust? Here's the key mental model shifts you need to make, and why the pain is worth it."
+date: 2026-02-09
+tags: [rust, typescript, systems]
+featured: false
+---
+
+If you're a TypeScript developer looking at Rust, the syntax isn't the hard part. It's the ownership model. Here's what you need to rewire in your brain.
+
+## Ownership Is Not Garbage Collection
+
+In TypeScript, you throw objects around and the GC handles cleanup. In Rust, every value has exactly one owner, and when the owner goes out of scope, the value is dropped.
+
+```rust
+fn main() {
+    let s1 = String::from("hello");
+    let s2 = s1; // s1 is MOVED, not copied
+    // println!("{}", s1); // This won't compile!
+    println!("{}", s2);
+}
+```
+
+In TypeScript, both variables would point to the same object. In Rust, `s1` is gone after the move.
+
+## Borrowing: References Without Ownership
+
+Instead of cloning everything, Rust lets you borrow values:
+
+```rust
+fn calculate_length(s: &String) -> usize {
+    s.len()
+} // s goes out of scope, but since it's a reference, nothing is dropped
+
+fn main() {
+    let s = String::from("hello");
+    let len = calculate_length(&s);
+    println!("Length of '{}' is {}", s, len); // s is still valid
+}
+```
+
+## The TypeScript Equivalent (Sort Of)
+
+Think of it like this: TypeScript's `readonly` is the closest analog to Rust's borrowing rules, except Rust enforces it at compile time with zero runtime cost.
+
+```typescript
+// TypeScript - runtime checking, optional
+function processData(data: Readonly<Data>): Result {
+  // data.field = "new"; // Type error, but only if you remember Readonly
+  return transform(data);
+}
+```
+
+```rust
+// Rust - compile-time enforcement, zero cost
+fn process_data(data: &Data) -> Result {
+    // data.field = "new"; // Won't compile, period.
+    transform(data)
+}
+```
+
+## Why Bother?
+
+No GC pauses. No null pointer exceptions. Thread safety guaranteed at compile time. The compiler is strict, but once it compiles, it runs fast and correct.
+
+For backend services handling thousands of concurrent connections, this matters. A lot.

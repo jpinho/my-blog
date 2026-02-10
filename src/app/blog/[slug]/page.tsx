@@ -4,12 +4,10 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
 import rehypeHighlight from "rehype-highlight";
-import { Calendar, Clock, ArrowLeft } from "lucide-react";
-import Link from "next/link";
 import { getAllPosts, getPostBySlug } from "@/lib/posts";
 import { formatDate } from "@/lib/utils";
 import { siteConfig } from "@/lib/config";
-import ShareButtons from "@/components/ShareButtons";
+import StoryView, { StorySlide } from "@/components/StoryView";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -46,6 +44,45 @@ export async function generateMetadata({
   };
 }
 
+const SLIDE_GRADIENTS = [
+  "linear-gradient(135deg, #0f2027, #203a43, #2c5364)",
+  "linear-gradient(135deg, #1a1a2e, #16213e, #0f3460)",
+  "linear-gradient(135deg, #232526, #414345)",
+  "linear-gradient(135deg, #0d1b2a, #1b2838, #2a4a5e)",
+  "linear-gradient(135deg, #1c1c3c, #2d2d5e, #3a3a80)",
+  "linear-gradient(135deg, #141e30, #243b55)",
+  "linear-gradient(135deg, #0b0b0f, #1a1a2e, #2d2d4e)",
+];
+
+function splitContentIntoSections(content: string): string[] {
+  const lines = content.split("\n");
+  const sections: string[] = [];
+  let current: string[] = [];
+
+  for (const line of lines) {
+    if (line.startsWith("## ")) {
+      if (current.length > 0) {
+        sections.push(current.join("\n").trim());
+      }
+      current = [line];
+    } else {
+      current.push(line);
+    }
+  }
+  if (current.length > 0) {
+    sections.push(current.join("\n").trim());
+  }
+
+  return sections.filter((s) => s.length > 0);
+}
+
+const mdxOptions = {
+  mdxOptions: {
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [rehypeSlug, rehypeHighlight],
+  },
+};
+
 export default async function PostPage({ params }: PageProps) {
   const { slug } = await params;
   const post = getPostBySlug(slug);
@@ -56,64 +93,23 @@ export default async function PostPage({ params }: PageProps) {
 
   const postUrl = `${siteConfig.siteUrl}/blog/${post.slug}`;
 
+  const sections = splitContentIntoSections(post.content);
+
   return (
-    <article>
-      <Link
-        href="/blog"
-        className="mb-6 inline-flex items-center gap-1 text-sm text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text)] dark:text-[var(--color-text-muted-dark)] dark:hover:text-[var(--color-text-dark)]"
-      >
-        <ArrowLeft size={14} /> Back to blog
-      </Link>
-
-      <header className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
-          {post.title}
-        </h1>
-        {post.description && (
-          <p className="mt-3 text-lg text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">
-            {post.description}
-          </p>
-        )}
-        <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">
-          <span className="flex items-center gap-1">
-            <Calendar size={14} />
-            {formatDate(post.date)}
-          </span>
-          <span className="flex items-center gap-1">
-            <Clock size={14} />
-            {post.readingTime}
-          </span>
-        </div>
-        {post.tags.length > 0 && (
-          <div className="mt-3 flex flex-wrap gap-2">
-            {post.tags.map((tag) => (
-              <Link
-                key={tag}
-                href={`/tags/${tag.toLowerCase()}`}
-                className="rounded-full bg-[var(--color-surface)] px-3 py-1 text-xs font-medium text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-accent)] dark:bg-[var(--color-surface-dark)] dark:text-[var(--color-text-muted-dark)] dark:hover:text-[var(--color-accent-dark)]"
-              >
-                #{tag}
-              </Link>
-            ))}
-          </div>
-        )}
-      </header>
-
-      <div className="prose prose-lg dark:prose-invert max-w-none">
-        <MDXRemote
-          source={post.content}
-          options={{
-            mdxOptions: {
-              remarkPlugins: [remarkGfm],
-              rehypePlugins: [rehypeSlug, rehypeHighlight],
-            },
-          }}
-        />
-      </div>
-
-      <hr className="my-8 border-[var(--color-border)] dark:border-[var(--color-border-dark)]" />
-
-      <ShareButtons url={postUrl} title={post.title} />
-    </article>
+    <StoryView
+      title={post.title}
+      date={formatDate(post.date)}
+      totalSlides={sections.length}
+    >
+      {sections.map((section, i) => (
+        <StorySlide
+          key={i}
+          index={i}
+          gradient={SLIDE_GRADIENTS[i % SLIDE_GRADIENTS.length]}
+        >
+          <MDXRemote source={section} options={mdxOptions} />
+        </StorySlide>
+      ))}
+    </StoryView>
   );
 }

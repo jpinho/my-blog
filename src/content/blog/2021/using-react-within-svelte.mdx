@@ -1,0 +1,111 @@
+---
+title: "Using React within Your Svelte Applications"
+description: "How to inject React components within your Svelte Application using a simple ReactAdapter abstraction."
+date: 2021-07-11
+tags: [svelte, react, javascript, frontend]
+featured: false
+---
+
+## Intro
+
+React is a powerful library to build user interfaces, but over the past years Svelte has been gaining a lot of traction and that is to be expected. React gained a lot of fame over the years but after its initial release date back in 2013, the library has been accumulating a lot of weight. From its initial form with ES6 classes to Functional Components and the world of React Hooks, React API has been showing signs of aging. But the topics on the why can maybe be defined in a different post.
+
+About Svelte, I will just quote directly from them:
+
+> Svelte is a radical new approach to building user interfaces. Whereas traditional frameworks like React and Vue do the bulk of their work in the browser, Svelte shifts that work into a compile step that happens when you build your app.
+
+## What Is This Post About?
+
+This blog post is about how you can inject your React components within your Svelte Application. A couple of reasons for this, but not limited to, are:
+
+- You have a big codebase in React and you want to try a new piece of your Architecture in Svelte without jeopardizing all that you have built over the years
+- You want to support a hybrid model so that your ReactJS Developers have time to keep up with Svelte until they finally move over
+- You really need to integrate with this amazing ReactJS library and they do not have a Svelte version of it
+
+And as a final note, let me just answer the question that is on the back of your head: **You can do everything that you do in React in Svelte and more!**
+
+## How Can You Build Svelte and React Side-by-side?
+
+You will need at least 2 things:
+
+- You need to install `react` and `react-dom`
+- React lives on the browser and Svelte compiles on the server, therefore you will need to render your React within Svelte `onMount` handlers
+
+To help you with this, I've built a nice abstraction and this is how it looks:
+
+```svelte
+<script>
+  import Button from "@material-ui/core/Button";
+  import ReactAdapter from "./utils/ReactAdapter.svelte";
+</script>
+
+<ReactAdapter
+  el={Button}
+  class="mui-btn"
+  children="Hello"
+  variant="contained"
+  color="primary"
+  onClick={() => alert("hello world!")}
+/>
+
+<style>
+  /**
+   * Styling a React Component from within a Svelte Component.
+   */
+  :global(.mui-btn) {
+    margin: 20px;
+  }
+</style>
+```
+
+As you can see above I'm using the ReactAdapter. That adapter is an abstraction that basically, given a React component, expands all its props into the final rendered React component without you having to care how to inject the React component itself in Svelte.
+
+## ReactAdapter Implementation
+
+So let's jump inside the code and see the bit of it that does the whole magic:
+
+```svelte
+<script>
+  import React from "react";
+  import ReactDOM from "react-dom";
+  import { onDestroy, onMount } from "svelte";
+
+  const e = React.createElement;
+  let container;
+
+  onMount(() => {
+    const { el, children, class: _, ...props } = $$props;
+    try {
+      ReactDOM.render(e(el, props, children), container);
+    } catch (err) {
+      console.warn(`react-adapter failed to mount.`, { err });
+    }
+  });
+
+  onDestroy(() => {
+    try {
+      ReactDOM.unmountComponentAtNode(container);
+    } catch (err) {
+      console.warn(`react-adapter failed to unmount.`, { err });
+    }
+  });
+</script>
+
+<div bind:this={container} class={$$props.class} />
+```
+
+It's pretty explicit by now that, the `onMount` (which runs on the browser window) does nothing else besides the plain old good React way to render a simple component, which is `ReactDOM.render`. We need as well to Reactify our received `el` using `React.createElement`, which is what we pass to the `ReactDOM.render` and finally, we inject that into a normal HTML Container.
+
+The `onDestroy` handler also takes care of cleaning after himself, by calling React's `unmountComponentAtNode`.
+
+## Can I Have React Components Next to Svelte?
+
+Yes, that's what we have just seen, that we can use our ReactAdapter to inject React into Svelte components. We just need to tell our Typescript compiler or Babel transpiler that any `.tsx` or `.jsx` files will have React that needs to be converted to plain javascript.
+
+By doing so, you can write your React components under your `/components/react/something.tsx` and you can then include them in Svelte using the ReactAdapter.
+
+I've created a bootstrap project to exemplify this and all the required configurations: [jpinho/svelte-react-sample-app](https://github.com/jpinho/svelte-react-sample-app)
+
+This repo uses MaterialUI as well to exemplify the usage of a 100% React Library within Svelte. You can find the deployed demo on surge [here](https://svelte-react.surge.sh).
+
+That's all folks, happy coding!

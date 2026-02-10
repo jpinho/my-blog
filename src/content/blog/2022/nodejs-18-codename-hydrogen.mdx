@@ -1,0 +1,51 @@
+---
+title: "NodeJS 18 — Codename Hydrogen Has Reached LTS! Five Reasons to Upgrade"
+description: "More powerful than ever with V8 Engine 10.1, an Embedded Test Runner, and much more."
+date: 2022-12-29
+tags: [nodejs, javascript]
+featured: false
+---
+
+### More powerful than ever with V8 Engine 10.1, an Embedded Test Runner, and much more
+
+The NodeJS ecosystem has been growing better and stronger over time, and the new version 18 is yet another major contribution to keeping such significant momentum. Big kudos to the entire NodeJS community.
+
+NodeJS 18 was released in April 2022 and officially entered the LTS phase (Long-term Support) in October 2022. This new version is now listed under the Codename Hydrogen.
+
+Fun Fact: Hydrogen is the number 1 element of the periodic table. Maybe the NodeJS community is trying to tell us that this is just the beginning of a NodeJS revolution!
+
+I will attempt to summarize the top 5 killer features that caught my eye:
+
+## 1. V8 Engine Updated to v10.1
+
+The V8 Engine has been updated to v10.1, which means we will have support for new functionality, such as new array methods (`findLast` and `findLastIndex`), `Intl.Locale` API improvements, improved performance of class fields, and private class methods.
+
+## 2. Globally Available Browser Compatible APIs
+
+Yes, you read it right; on this version `fetch` is coming by default, alongside the Web Streams API, `Blob`, and Broadcast Channels.
+
+## 3. Built-in Test Runner Module
+
+This one is my favorite! Node 18 comes with a Test Runner Module, which means you can create tests easily without requiring jest or any other test runner, similar to Deno (which also comes with a Test Runner). To use it all you have to do is:
+
+```javascript
+test('neo follows the white rabbit', async (t) => {
+  await t.test('neo has opened the door', (t) => {
+    assert.strictEqual('door', 'open');
+  });
+
+  await t.test('neo has seen the white rabbit', (t) => {
+    assert.strictEqual('follows', 'rabbit');
+  });
+});
+```
+
+## 4. Better ARM Support
+
+Better support for ARM-based CPUs such as Apple M1's with cross compiler for ARMv7.
+
+## 5. Build-time User-land Snapshot
+
+Since Node 18 users can now build Node.js binaries, which means users can execute a NodeJS binary without an additional runtime entry point script. We can now bundle entire NodeJS applications into a single-executable binary.
+
+I hope you liked this short digest on the latest Node18 top features. And if you like Node.JS or use it in your day-to-day developments, I highly recommend that you take a look at its younger brother Deno!

@@ -1,0 +1,46 @@
+---
+title: "Hot Pick: DynamoDB Toolbox over Nova ODM"
+description: "Why DynamoDB Toolbox is my go-to pick over Nova ODM for programmatically interacting with DynamoDB."
+date: 2024-11-16
+tags: [dynamodb, aws]
+featured: false
+---
+
+Unarguably, DynamoDB is one of the best databases ever, it's schemaless, fault-tolerant, highly scalable, blazing fast and all the tooling around it makes it one of my favourite "go to" options 99% of the times.
+
+Now, when it comes to programmatically interact with this database, we have a range of options since the AWS Data Mapper (now deprecated `@aws/dynamodb-data-mapper`), DynamoDB Document Client provided by AWS SDK v3 (`@aws-sdk/client-dynamodb`), Nova ODM (the active fork of data-mapper deprecated by AWS), among others... such as DynamoDB Toolbox!
+
+This blogpost, expands on my hot pick of DynamoDB Toolbox over Nova ODM and why I believe DynamoDB Toolbox is the better pick!
+
+## Nova ODM
+
+Nova ODM is pretty nice, gives you a thin layer between direct DynamoDB operations and Domain Objects mapping from and to your DynamoDB tables. It provides marshalling and unmarshalling of domain objects through what's called a Model, and everything works with these nice annotations around your Classes. You get type-safety through generics and the experience is not that bad.
+
+On the other hand, the maintenance of the active fork is now kept under one single contributor and the pulse on the project seems pretty weak. And the only reason, we could justify a team keeping its usage is most likely due to a legacy dependency on the old and now deprecated AWS Data Mapper.
+
+## DynamoDB Toolbox
+
+And then you have DynamoDB Toolbox! This from all the above is definitely my favourite!
+
+Let me clear out, I'm a framework-guy — I'm in favour of using frameworks over low-level access tools that typically lead developers into "reinventing the wheel". So unless I have a very good reason, I prefer to hit a framework every single time.
+
+A very well known pattern on DynamoDB is single table design, which means, we will often manage within one table, multiple kinds of entities, and within each entity kind we can even store the same data organised under a different SK (secondary key) just so we can support the access patterns our application needs for such data.
+
+DynamoDB Toolbox, copes beautifully with these patterns by exposing 3 main classes:
+
+- **Tables** — map to your database table configuration
+- **Entities** — map to the categories of data you have within your tables
+- **Schemas** — used to list the attributes of your entities
+
+With this, DynamoDB Toolbox provides a very nice abstraction over the Document Client. A key point here is that the Document Client doesn't get replaced, given it's actually needed to instantiate the commands that interact with DynamoDB.
+
+## Interesting Features
+
+- By default all entity data fields are stored within an attribute called `_et` (as of entity)
+- All entities, get (optional) timestamp attributes: `created`, `modified`
+- Provides a `TableSpy` utility which is super useful for writing unit tests. Enabling you to stub sendable actions like Scans and Query
+- Schemas describe the list of attributes of your entities, and their definition is not only very close to the data types supported by DynamoDB, but its definition is also similar to defining Zod Types, supporting, inclusively data validation! Which in Domain Driven Design, enables us to build Rich Domain Models, where our so called models (Entities) encompass data that has been validated and abides by a given set of domain rules defined on their corresponding Schemas
+- You can also implement your own Custom Validators to validate put and update operations over DynamoDB
+- Error Management is super neat as well, given all the "framework" built around our raw DynamoDB is able to provide great error handling! Which makes it super easy to provide good exceptions to your API Controllers and API users therefore.
+
+If you haven't checked this treasure of OpenSource software, please make yourself a favour and [go check it out](https://www.dynamodbtoolbox.com).

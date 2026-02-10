@@ -4,9 +4,9 @@ export const siteConfig = {
   author: "Pinho",
   siteUrl: "https://pinho-blog.vercel.app", // Update after deployment
   social: {
-    github: "https://github.com/pinho",
-    twitter: "https://twitter.com/pinho",
-    linkedin: "https://linkedin.com/in/pinho",
+    github: "https://github.com/jpinho",
+    twitter: "https://x.com/jpepinho",
+    linkedin: "https://linkedin.com/in/joaoppinho",
   },
   postsPerPage: 10,
 };

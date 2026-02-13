@@ -17,7 +17,7 @@ export default function Home() {
           <h1 className="text-4xl font-bold tracking-tight text-[var(--color-text-primary)] dark:text-[var(--color-text-primary-dark)] sm:text-5xl lg:text-6xl animate-slide-in">
             Hey, I&apos;m{" "}
             <span className="relative inline-block bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] bg-clip-text text-transparent animate-gradient">
-              {siteConfig.author}
+              Pinho
               <div className="absolute -inset-1 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] rounded-lg blur opacity-20 animate-glow"></div>
             </span>
           </h1>

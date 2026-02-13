@@ -1,7 +1,7 @@
 export const siteConfig = {
-  title: "Pinho's Blog",
+  title: "Hey, I'm Pinho",
   description: "A collection of thoughts on engineering, technology, and building things.",
-  author: "Pinho",
+  author: "João Pinho",
   siteUrl: "https://pinho-blog.vercel.app", // Update after deployment
   social: {
     github: "https://github.com/jpinho",

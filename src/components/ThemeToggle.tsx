@@ -11,16 +11,16 @@ export default function ThemeToggle() {
   useEffect(() => setMounted(true), []);
 
   if (!mounted) {
-    return <div className="h-9 w-9" />;
+    return <div className="h-11 w-11" />;
   }
 
   return (
     <button
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="rounded-lg p-2 transition-colors hover:bg-[var(--color-surface)] dark:hover:bg-[var(--color-surface-dark)]"
+      className="flex items-center justify-center h-11 w-11 rounded-xl bg-[var(--color-surface-elevated)] text-[var(--color-text-secondary)] border border-[var(--color-border-secondary)] transition-all duration-300 hover:bg-[var(--color-hover-light)] hover:text-[var(--color-text-primary)] hover:shadow-[var(--shadow-soft)] dark:bg-[var(--color-surface-elevated-dark)] dark:border-[var(--color-border-secondary-dark)] dark:text-[var(--color-text-secondary-dark)] dark:hover:bg-[var(--color-hover-dark)] dark:hover:text-[var(--color-text-primary-dark)]"
       aria-label="Toggle theme"
     >
-      {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+      {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
     </button>
   );
 }

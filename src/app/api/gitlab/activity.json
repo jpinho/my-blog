@@ -1,0 +1,48 @@
+{
+  "lastUpdated": "2026-02-13",
+  "summary": {
+    "totalEvents": 100,
+    "dateRange": {
+      "start": "2026-02-04",
+      "end": "2026-02-12"
+    }
+  },
+  "activityByDate": [
+    {"date": "2026-02-12", "events": 9, "commits": 9, "mergeRequests": 0, "issues": 0},
+    {"date": "2026-02-11", "events": 4, "commits": 2, "mergeRequests": 1, "issues": 0},
+    {"date": "2026-02-10", "events": 4, "commits": 3, "mergeRequests": 1, "issues": 0},
+    {"date": "2026-02-09", "events": 18, "commits": 3, "mergeRequests": 3, "issues": 2},
+    {"date": "2026-02-08", "events": 6, "commits": 2, "mergeRequests": 1, "issues": 0},
+    {"date": "2026-02-07", "events": 6, "commits": 4, "mergeRequests": 1, "issues": 0},
+    {"date": "2026-02-06", "events": 20, "commits": 8, "mergeRequests": 3, "issues": 0},
+    {"date": "2026-02-05", "events": 5, "commits": 5, "mergeRequests": 0, "issues": 0},
+    {"date": "2026-02-04", "events": 28, "commits": 16, "mergeRequests": 4, "issues": 2}
+  ],
+  "recentMergeRequests": [
+    {
+      "date": "2026-02-11",
+      "title": "refactor(outlook-sync): extract upsert and delete flows into dedicated processors",
+      "status": "opened"
+    },
+    {
+      "date": "2026-02-09",
+      "title": "feat: revamp tabs and connections",
+      "status": "merged"
+    },
+    {
+      "date": "2026-02-08",
+      "title": "fix: allow pending outlook connections and add CSRF protection",
+      "status": "merged"
+    },
+    {
+      "date": "2026-02-06",
+      "title": "rft: perf optimisations - lazy loading",
+      "status": "merged"
+    },
+    {
+      "date": "2026-02-04",
+      "title": "feat(outlook-sync): impls support for outlook email attachments",
+      "status": "merged"
+    }
+  ]
+}

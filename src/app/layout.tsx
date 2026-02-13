@@ -42,7 +42,7 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <Header />
-          <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-8">
+          <main className="mx-auto w-full max-w-4xl flex-1 px-6 py-12 lg:px-8">
             {children}
           </main>
           <Footer />

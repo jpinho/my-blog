@@ -16,6 +16,8 @@ export interface PostMeta {
   draft: boolean;
   heroImage?: string;
   readingTime: string;
+  audioUrl?: string;
+  videoThumbnail?: string;
 }
 
 export interface Post extends PostMeta {
@@ -38,6 +40,32 @@ function getFilesRecursively(dir: string): string[] {
   return files;
 }
 
+function extractYouTubeId(content: string): string | undefined {
+  // Look for YouTube component usage
+  const youtubeComponentMatch = content.match(/<YouTube[^>]*(?:url="([^"]+)"|id="([^"]+)")/);
+  if (youtubeComponentMatch) {
+    const url = youtubeComponentMatch[1];
+    const directId = youtubeComponentMatch[2];
+
+    if (directId) return directId;
+
+    if (url) {
+      // Extract ID from various YouTube URL formats
+      const patterns = [
+        /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
+        /youtube\.com\/watch\?.*v=([^&\n?#]+)/
+      ];
+
+      for (const pattern of patterns) {
+        const match = url.match(pattern);
+        if (match) return match[1];
+      }
+    }
+  }
+
+  return undefined;
+}
+
 export function getAllPosts(): Post[] {
   if (!fs.existsSync(CONTENT_DIR)) return [];
 
@@ -54,6 +82,12 @@ export function getAllPosts(): Post[] {
 
       const stats = readingTime(content);
 
+      // Extract YouTube video ID to generate thumbnail
+      const youtubeId = extractYouTubeId(content);
+      const videoThumbnail = youtubeId
+        ? `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`
+        : undefined;
+
       return {
         slug,
         title: data.title || "Untitled",
@@ -69,6 +103,8 @@ export function getAllPosts(): Post[] {
         draft: data.draft || false,
         heroImage: data.heroImage || undefined,
         readingTime: stats.text,
+        audioUrl: data.audioUrl || undefined,
+        videoThumbnail,
         content,
       };
     })

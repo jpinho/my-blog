@@ -6,7 +6,8 @@
         "dev": "next dev",
         "build": "next build",
         "start": "next start",
-        "lint": "next lint"
+        "lint": "next lint",
+        "generate-audio": "node scripts/generate-audio.js"
     },
     "dependencies": {
         "feed": "4.2.2",

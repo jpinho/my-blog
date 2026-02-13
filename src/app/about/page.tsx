@@ -167,7 +167,7 @@ export default function AboutPage() {
           </li>
           <li>
             <strong className="text-[var(--color-primary)] dark:text-[var(--color-primary-dark)]">📧 Platform Communications</strong>
-            <span className="block text-sm mt-1">Scaled email system notifications to provide better and more accurate information to customers, currently driving data deletion/anonymization compliance and Outlook integration for our messaging hub—building towards an omnichannel communication foundation</span>
+            <span className="block text-sm mt-1">Scaled email system notifications to provide better and more accurate information to customers, ensuring they don&#39;t have to leave their inbox to know what a notification is about. Currently driving data deletion/anonymization compliance and Outlook integration for our messaging hub—building towards an omnichannel communication foundation</span>
           </li>
           <li>
             <strong className="text-[var(--color-primary)] dark:text-[var(--color-primary-dark)]">🤖 AI Advocate & Explorer</strong>

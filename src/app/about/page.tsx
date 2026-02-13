@@ -12,6 +12,25 @@ export default function AboutPage() {
     <div className="prose prose-lg dark:prose-invert max-w-none animate-fade-in">
       <h1 className="animate-slide-in">About</h1>
 
+      {/* Hero Image */}
+      <div className="not-prose mb-8">
+        <div className="rounded-xl overflow-hidden shadow-lg">
+          <img
+            src="/images/about/switzerland-2025.jpg"
+            alt="At a Swiss train station"
+            className="w-full h-auto object-cover"
+          />
+        </div>
+        <div className="text-center mt-4 space-y-1">
+          <p className="text-base font-medium text-[var(--color-text-primary)]">
+            Switzerland 2025
+          </p>
+          <p className="text-sm text-[var(--color-text-tertiary)] italic">
+            Family Trip Zurich to Sion and Back + XTerra in La Brevine!
+          </p>
+        </div>
+      </div>
+
       <div className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] text-transparent bg-clip-text animate-gradient">
         <p className="text-xl font-semibold">
           Distinguished Engineer at epilot • Core Team • AI Advocate

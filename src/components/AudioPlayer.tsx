@@ -10,6 +10,19 @@ interface AudioPlayerProps {
 }
 
 export default function AudioPlayer({ src, title = "Listen to this article", duration }: AudioPlayerProps) {
+  // Temporarily hidden - return null
+  return null;
+}
+
+// Also export for potential use in MDX files directly
+export function Audio({ src, title, duration }: AudioPlayerProps) {
+  // Temporarily hidden - return null
+  return null;
+}
+
+/* Original component code - commented out temporarily
+
+export default function AudioPlayer({ src, title = "Listen to this article", duration }: AudioPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [totalDuration, setTotalDuration] = useState(0);
@@ -152,7 +165,6 @@ export default function AudioPlayer({ src, title = "Listen to this article", dur
           </button>
         </div>
 
-        {/* Progress Bar */}
         <div
           ref={progressRef}
           className="relative h-2 bg-[var(--color-bg-secondary)] dark:bg-[var(--color-bg-secondary-dark)] rounded-full mb-4 cursor-pointer group"
@@ -168,13 +180,11 @@ export default function AudioPlayer({ src, title = "Listen to this article", dur
           />
         </div>
 
-        {/* Time Display */}
         <div className="flex justify-between text-xs text-[var(--color-text-tertiary)] dark:text-[var(--color-text-tertiary-dark)] mb-4">
           <span>{formatTime(currentTime)}</span>
           <span>{formatTime(totalDuration)}</span>
         </div>
 
-        {/* Controls */}
         <div className="flex items-center justify-center gap-4">
           <button
             onClick={skipBackward}
@@ -228,7 +238,8 @@ export default function AudioPlayer({ src, title = "Listen to this article", dur
   );
 }
 
-// Also export for potential use in MDX files directly
 export function Audio({ src, title, duration }: AudioPlayerProps) {
   return <AudioPlayer src={src} title={title} duration={duration} />;
 }
+
+*/"

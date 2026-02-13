@@ -31,7 +31,7 @@ export default function Home() {
             <p className="text-[var(--color-text-secondary)] dark:text-[var(--color-text-secondary-dark)] leading-relaxed">
               Deep technical insights on AI engineering, distributed systems, and product engineering philosophy.
               From practical guides on DynamoDB optimization to strategic thinking about tech debt, cognitive biases in engineering,
-              and the evolution of software craftsmanship in the age of AI. Written by a Principal Engineer who believes
+              and the evolution of software craftsmanship in the age of AI. Written by a Product Engineer who believes
               in solving problems that matter, not just writing code.
             </p>
           </div>

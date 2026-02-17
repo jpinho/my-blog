@@ -3,32 +3,39 @@ import Link from "next/link";
 import { getAllTags } from "@/lib/posts";
 
 export const metadata: Metadata = {
-  title: "Tags",
-  description: "Browse all tags.",
+  title: "Topics",
+  description: "Browse all topics.",
 };
 
 export default function TagsPage() {
   const tags = getAllTags();
 
   return (
-    <div>
-      <h1 className="mb-8 text-3xl font-bold tracking-tight">Tags</h1>
+    <div className="animate-fade-in">
+      <div className="mb-10">
+        <h1 className="text-3xl font-bold tracking-tight text-[var(--color-text-primary)] dark:text-[var(--color-text-primary-dark)] sm:text-4xl">
+          Topics
+        </h1>
+        <p className="mt-3 text-base text-[var(--color-text-secondary)] dark:text-[var(--color-text-secondary-dark)]">
+          Browse posts by topic.
+        </p>
+      </div>
 
       {tags.length === 0 ? (
-        <p className="text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">
-          No tags yet.
+        <p className="py-8 text-sm text-[var(--color-text-secondary)] dark:text-[var(--color-text-secondary-dark)]">
+          No topics yet.
         </p>
       ) : (
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-wrap gap-2">
           {tags.map((tag) => (
             <Link
               key={tag.name}
               href={`/tags/${tag.name}`}
-              className="rounded-full border border-[var(--color-border)] px-4 py-2 text-sm transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] dark:border-[var(--color-border-dark)] dark:hover:border-[var(--color-accent-dark)] dark:hover:text-[var(--color-accent-dark)]"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] border border-[var(--color-border-primary)] hover:border-[var(--color-primary)] rounded-md transition-colors dark:text-[var(--color-text-secondary-dark)] dark:hover:text-[var(--color-text-primary-dark)] dark:border-[var(--color-border-primary-dark)] dark:hover:border-[var(--color-primary-dark)]"
             >
-              #{tag.name}{" "}
-              <span className="text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">
-                ({tag.count})
+              {tag.name}
+              <span className="text-xs text-[var(--color-text-tertiary)] dark:text-[var(--color-text-tertiary-dark)]">
+                {tag.count}
               </span>
             </Link>
           ))}

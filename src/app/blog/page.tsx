@@ -11,33 +11,33 @@ export default function BlogPage() {
   const postsByYear = getPostsByYear();
 
   return (
-    <div>
-      <div className="relative mb-16">
-        <h1 className="text-4xl font-bold tracking-tight text-[var(--color-text-primary)] dark:text-[var(--color-text-primary-dark)] sm:text-5xl">
-          All Posts
+    <div className="animate-fade-in">
+      <div className="mb-10">
+        <h1 className="text-3xl font-bold tracking-tight text-[var(--color-text-primary)] dark:text-[var(--color-text-primary-dark)] sm:text-4xl">
+          Blog
         </h1>
-        <p className="mt-4 text-lg text-[var(--color-text-secondary)] dark:text-[var(--color-text-secondary-dark)]">
+        <p className="mt-3 text-base text-[var(--color-text-secondary)] dark:text-[var(--color-text-secondary-dark)]">
           A collection of thoughts on engineering, technology, and building things.
         </p>
       </div>
 
       {postsByYear.size === 0 ? (
-        <div className="flex flex-col items-center justify-center py-16 text-center">
-          <p className="text-lg text-[var(--color-text-secondary)] dark:text-[var(--color-text-secondary-dark)]">
-            No posts yet. Start writing!
-          </p>
-        </div>
+        <p className="py-8 text-sm text-[var(--color-text-secondary)] dark:text-[var(--color-text-secondary-dark)]">
+          No posts yet.
+        </p>
       ) : (
-        <div className="space-y-16">
+        <div className="space-y-12">
           {Array.from(postsByYear.entries()).map(([year, posts]) => (
             <section key={year}>
-              <div className="flex items-center gap-3 mb-8">
-                <h2 className="text-2xl font-bold text-[var(--color-text-primary)] dark:text-[var(--color-text-primary-dark)]">
+              <div className="flex items-center gap-3 mb-2">
+                <h2 className="text-xs font-medium uppercase tracking-wider text-[var(--color-text-tertiary)] dark:text-[var(--color-text-tertiary-dark)]">
                   {year}
                 </h2>
-                <div className="flex-1 h-px bg-[var(--color-border-primary)] dark:bg-[var(--color-border-primary-dark)]"></div>
+                <span className="text-xs text-[var(--color-text-tertiary)] dark:text-[var(--color-text-tertiary-dark)]">
+                  {posts.length} {posts.length === 1 ? "post" : "posts"}
+                </span>
               </div>
-              <div className="space-y-6">
+              <div className="border-t border-[var(--color-border-primary)] dark:border-[var(--color-border-primary-dark)]">
                 {posts.map((post) => (
                   <PostCard key={post.slug} post={post} />
                 ))}

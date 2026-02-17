@@ -2,68 +2,90 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Search, Menu, X } from "lucide-react";
-import { useState } from "react";
+import { Menu, X } from "lucide-react";
+import { useState, useEffect, useCallback } from "react";
 import ThemeToggle from "./ThemeToggle";
-import { siteConfig } from "@/lib/config";
 
 const navLinks = [
-  { href: "/blog", label: "Blog" },
-  { href: "/tags", label: "Tags" },
-  { href: "/about", label: "About" },
+  { href: "/blog", label: "Blog", shortcut: "B" },
+  { href: "/tags", label: "Topics", shortcut: "T" },
+  { href: "/about", label: "About", shortcut: "A" },
+  { href: "/search", label: "Search", shortcut: "S" },
 ];
 
 export default function Header() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  const handleKeyPress = useCallback(
+    (e: KeyboardEvent) => {
+      if (
+        e.target instanceof HTMLInputElement ||
+        e.target instanceof HTMLTextAreaElement ||
+        e.metaKey ||
+        e.ctrlKey ||
+        e.altKey
+      ) {
+        return;
+      }
+
+      const link = navLinks.find(
+        (l) => l.shortcut.toLowerCase() === e.key.toLowerCase()
+      );
+      if (link) {
+        window.location.href = link.href;
+      }
+    },
+    []
+  );
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyPress);
+    return () => document.removeEventListener("keydown", handleKeyPress);
+  }, [handleKeyPress]);
+
   return (
-    <header className="sticky top-0 z-50 glass-surface border-b border-[var(--color-border-primary)] dark:border-[var(--color-border-primary-dark)]">
-      <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-5 lg:px-8">
+    <header className="sticky top-0 z-50 bg-[var(--color-bg)]/95 backdrop-blur-sm border-b border-[var(--color-border-primary)] dark:bg-[var(--color-bg-dark)]/95 dark:border-[var(--color-border-primary-dark)]">
+      <div className="mx-auto flex max-w-[960px] items-center justify-between px-6 py-4">
         <Link
           href="/"
-          className="group flex items-center gap-3 text-xl font-bold text-[var(--color-text-primary)] transition-all duration-300 hover:text-[var(--color-primary)] dark:text-[var(--color-text-primary-dark)] dark:hover:text-[var(--color-primary-dark)]"
+          className="text-[var(--color-text-primary)] dark:text-[var(--color-text-primary-dark)] hover:text-[var(--color-primary)] dark:hover:text-[var(--color-primary-dark)] transition-colors"
+          aria-label="Home"
         >
-          <div className="relative">
-            <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] p-0.5 shadow-sm">
-              <div className="h-full w-full rounded-[calc(var(--radius-xl)-2px)] bg-[var(--color-surface)] dark:bg-[var(--color-surface-dark)] flex items-center justify-center">
-                <span className="text-sm font-bold text-[var(--color-primary)] dark:text-[var(--color-primary-dark)]">
-                  {siteConfig.author.charAt(0).toUpperCase()}
-                </span>
-              </div>
-            </div>
-            <div className="absolute -inset-0.5 rounded-xl bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] opacity-0 blur-sm transition-opacity duration-300 group-hover:opacity-20"></div>
-          </div>
-          <span className="group-hover:tracking-wide transition-all duration-300 font-medium">
-            {siteConfig.author}
-          </span>
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M3 10.5L10 3.5L17 10.5M5 9V16.5H8.5V12.5H11.5V16.5H15V9"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden items-center gap-3 sm:flex">
-          <div className="flex items-center gap-1 rounded-2xl bg-[var(--color-surface-elevated)] p-1.5 shadow-[var(--shadow-soft)] border border-[var(--color-border-secondary)] dark:bg-[var(--color-surface-elevated-dark)] dark:border-[var(--color-border-secondary-dark)]">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`relative px-5 py-2.5 text-sm font-medium transition-all duration-300 rounded-xl ${
-                  pathname.startsWith(link.href)
-                    ? "bg-[var(--color-primary)] text-white shadow-[var(--shadow-soft)] dark:bg-[var(--color-primary-dark)]"
-                    : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-hover-light)] dark:text-[var(--color-text-secondary-dark)] dark:hover:text-[var(--color-text-primary-dark)] dark:hover:bg-[var(--color-hover-dark)]"
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-          <div className="flex items-center gap-3 ml-1">
+        <nav className="hidden items-center gap-6 sm:flex">
+          {navLinks.map((link) => (
             <Link
-              href="/search"
-              className="flex items-center justify-center h-11 w-11 rounded-xl bg-[var(--color-surface-elevated)] text-[var(--color-text-secondary)] border border-[var(--color-border-secondary)] transition-all duration-300 hover:bg-[var(--color-hover-light)] hover:text-[var(--color-text-primary)] hover:shadow-[var(--shadow-soft)] dark:bg-[var(--color-surface-elevated-dark)] dark:border-[var(--color-border-secondary-dark)] dark:text-[var(--color-text-secondary-dark)] dark:hover:bg-[var(--color-hover-dark)] dark:hover:text-[var(--color-text-primary-dark)]"
-              aria-label="Search"
+              key={link.href}
+              href={link.href}
+              className={`group flex items-center gap-1.5 text-sm transition-colors ${
+                pathname.startsWith(link.href)
+                  ? "text-[var(--color-text-primary)] dark:text-[var(--color-text-primary-dark)] font-medium"
+                  : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] dark:text-[var(--color-text-secondary-dark)] dark:hover:text-[var(--color-text-primary-dark)]"
+              }`}
             >
-              <Search size={18} />
+              <span className="kbd opacity-0 group-hover:opacity-100 transition-opacity">[{link.shortcut}]</span>
+              {link.label}
             </Link>
+          ))}
+          <div className="ml-2 flex items-center border-l border-[var(--color-border-primary)] dark:border-[var(--color-border-primary-dark)] pl-4">
             <ThemeToggle />
           </div>
         </nav>
@@ -73,7 +95,7 @@ export default function Header() {
           <ThemeToggle />
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="flex items-center justify-center h-11 w-11 rounded-xl bg-[var(--color-surface-elevated)] text-[var(--color-text-secondary)] border border-[var(--color-border-secondary)] transition-all duration-300 hover:bg-[var(--color-hover-light)] hover:text-[var(--color-text-primary)] dark:bg-[var(--color-surface-elevated-dark)] dark:border-[var(--color-border-secondary-dark)] dark:text-[var(--color-text-secondary-dark)] dark:hover:bg-[var(--color-hover-dark)] dark:hover:text-[var(--color-text-primary-dark)]"
+            className="flex items-center justify-center h-9 w-9 text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] dark:text-[var(--color-text-secondary-dark)] dark:hover:text-[var(--color-text-primary-dark)] transition-colors"
             aria-label="Toggle menu"
           >
             {mobileOpen ? <X size={20} /> : <Menu size={20} />}
@@ -83,29 +105,22 @@ export default function Header() {
 
       {/* Mobile nav */}
       {mobileOpen && (
-        <nav className="border-t border-[var(--color-border-primary)] px-6 py-4 backdrop-blur-md bg-[var(--color-surface-glass)] dark:bg-[var(--color-surface-glass-dark)] dark:border-[var(--color-border-primary-dark)] sm:hidden">
+        <nav className="border-t border-[var(--color-border-primary)] px-6 py-3 dark:border-[var(--color-border-primary-dark)] sm:hidden">
           <div className="space-y-1">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className={`block px-3 py-3 text-sm font-medium rounded-xl transition-all duration-300 ${
+                className={`block px-3 py-2.5 text-sm transition-colors rounded-md ${
                   pathname.startsWith(link.href)
-                    ? "bg-[var(--color-primary)] text-white shadow-sm dark:bg-[var(--color-primary-dark)]"
-                    : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-hover-light)] dark:text-[var(--color-text-secondary-dark)] dark:hover:text-[var(--color-text-primary-dark)] dark:hover:bg-[var(--color-hover-dark)]"
+                    ? "text-[var(--color-text-primary)] dark:text-[var(--color-text-primary-dark)] font-medium bg-[var(--color-surface-elevated)] dark:bg-[var(--color-surface-elevated-dark)]"
+                    : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] dark:text-[var(--color-text-secondary-dark)] dark:hover:text-[var(--color-text-primary-dark)]"
                 }`}
               >
                 {link.label}
               </Link>
             ))}
-            <Link
-              href="/search"
-              onClick={() => setMobileOpen(false)}
-              className="block px-3 py-3 text-sm font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-hover-light)] rounded-xl transition-all duration-300 dark:text-[var(--color-text-secondary-dark)] dark:hover:text-[var(--color-text-primary-dark)] dark:hover:bg-[var(--color-hover-dark)]"
-            >
-              Search
-            </Link>
           </div>
         </nav>
       )}

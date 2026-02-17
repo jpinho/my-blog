@@ -1,38 +1,65 @@
 import Link from "next/link";
-import { Github, Twitter, Linkedin, Rss } from "lucide-react";
 import { siteConfig } from "@/lib/config";
 
 export default function Footer() {
   return (
-    <footer className="mt-auto border-t border-[var(--color-border-primary)] bg-[var(--color-bg-secondary)] dark:border-[var(--color-border-primary-dark)] dark:bg-[var(--color-bg-secondary-dark)]">
-      <div className="mx-auto flex max-w-5xl flex-col items-center gap-6 px-6 py-12 sm:flex-row sm:justify-between lg:px-8">
-        <div className="flex flex-col items-center gap-3 sm:items-start">
-          <p className="text-sm font-medium text-[var(--color-text-secondary)] dark:text-[var(--color-text-secondary-dark)]">
-            &copy; {new Date().getFullYear()} {siteConfig.author}
-          </p>
-          <p className="text-xs text-[var(--color-text-tertiary)] dark:text-[var(--color-text-tertiary-dark)]">
-            Built with Next.js and Tailwind CSS
-          </p>
+    <footer className="mt-auto border-t border-[var(--color-border-primary)] dark:border-[var(--color-border-primary-dark)]">
+      <div className="mx-auto flex max-w-[960px] flex-col gap-6 px-6 py-10 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-[var(--color-text-tertiary)] dark:text-[var(--color-text-tertiary-dark)]">
+          <Link
+            href="/blog"
+            className="hover:text-[var(--color-text-primary)] dark:hover:text-[var(--color-text-primary-dark)] transition-colors"
+          >
+            Blog
+          </Link>
+          <Link
+            href="/about"
+            className="hover:text-[var(--color-text-primary)] dark:hover:text-[var(--color-text-primary-dark)] transition-colors"
+          >
+            About
+          </Link>
+          <Link
+            href="/tags"
+            className="hover:text-[var(--color-text-primary)] dark:hover:text-[var(--color-text-primary-dark)] transition-colors"
+          >
+            Topics
+          </Link>
+          <Link
+            href="/rss.xml"
+            className="hover:text-[var(--color-text-primary)] dark:hover:text-[var(--color-text-primary-dark)] transition-colors"
+          >
+            RSS
+          </Link>
         </div>
 
-        <div className="flex items-center gap-1">
-          {[
-            { href: siteConfig.social.github, icon: Github, label: "GitHub" },
-            { href: siteConfig.social.twitter, icon: Twitter, label: "Twitter" },
-            { href: siteConfig.social.linkedin, icon: Linkedin, label: "LinkedIn" },
-            { href: "/rss.xml", icon: Rss, label: "RSS Feed" },
-          ].map(({ href, icon: Icon, label }) => (
-            <Link
-              key={label}
-              href={href}
-              target={href.startsWith("http") ? "_blank" : undefined}
-              rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-              className="flex items-center justify-center h-10 w-10 rounded-xl bg-[var(--color-surface-elevated)] text-[var(--color-text-tertiary)] border border-[var(--color-border-secondary)] transition-all duration-300 hover:bg-[var(--color-hover-light)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-border-accent)] dark:bg-[var(--color-surface-elevated-dark)] dark:border-[var(--color-border-secondary-dark)] dark:text-[var(--color-text-tertiary-dark)] dark:hover:bg-[var(--color-hover-dark)] dark:hover:text-[var(--color-text-primary-dark)] dark:hover:border-[var(--color-border-accent-dark)]"
-              aria-label={label}
-            >
-              <Icon size={16} />
-            </Link>
-          ))}
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-[var(--color-text-tertiary)] dark:text-[var(--color-text-tertiary-dark)]">
+          <a
+            href={siteConfig.social.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-[var(--color-text-primary)] dark:hover:text-[var(--color-text-primary-dark)] transition-colors"
+          >
+            GitHub
+          </a>
+          <a
+            href={siteConfig.social.twitter}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-[var(--color-text-primary)] dark:hover:text-[var(--color-text-primary-dark)] transition-colors"
+          >
+            X
+          </a>
+          <a
+            href={siteConfig.social.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-[var(--color-text-primary)] dark:hover:text-[var(--color-text-primary-dark)] transition-colors"
+          >
+            LinkedIn
+          </a>
+          <span>
+            &copy; {new Date().getFullYear()} {siteConfig.author}
+          </span>
         </div>
       </div>
     </footer>

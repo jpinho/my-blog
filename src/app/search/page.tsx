@@ -5,7 +5,6 @@ import { Search as SearchIcon } from "lucide-react";
 import PostCard from "@/components/PostCard";
 import { PostMeta } from "@/lib/posts";
 
-// Client-side search - posts passed via a wrapper
 function SearchContent({ posts }: { posts: PostMeta[] }) {
   const [query, setQuery] = useState("");
 
@@ -21,46 +20,48 @@ function SearchContent({ posts }: { posts: PostMeta[] }) {
   }, [query, posts]);
 
   return (
-    <div>
-      <h1 className="mb-6 text-3xl font-bold tracking-tight">Search</h1>
+    <div className="animate-fade-in">
+      <h1 className="text-3xl font-bold tracking-tight text-[var(--color-text-primary)] dark:text-[var(--color-text-primary-dark)] sm:text-4xl mb-8">
+        Search
+      </h1>
 
       <div className="relative mb-8">
         <SearchIcon
-          size={18}
-          className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]"
+          size={16}
+          className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-tertiary)] dark:text-[var(--color-text-tertiary-dark)]"
         />
         <input
           type="text"
           placeholder="Search posts..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] py-3 pl-10 pr-4 text-[var(--color-text)] outline-none transition-colors focus:border-[var(--color-accent)] dark:border-[var(--color-border-dark)] dark:bg-[var(--color-bg-dark)] dark:text-[var(--color-text-dark)] dark:focus:border-[var(--color-accent-dark)]"
+          className="w-full rounded-md border border-[var(--color-border-primary)] bg-[var(--color-bg)] py-2.5 pl-9 pr-4 text-sm text-[var(--color-text-primary)] outline-none transition-colors focus:border-[var(--color-primary)] dark:border-[var(--color-border-primary-dark)] dark:bg-[var(--color-bg-dark)] dark:text-[var(--color-text-primary-dark)] dark:focus:border-[var(--color-primary-dark)]"
           autoFocus
         />
       </div>
 
       {query.trim() && (
-        <p className="mb-4 text-sm text-[var(--color-text-muted)] dark:text-[var(--color-text-muted-dark)]">
-          {results.length} result{results.length !== 1 ? "s" : ""} for &quot;
-          {query}&quot;
+        <p className="mb-4 text-xs text-[var(--color-text-tertiary)] dark:text-[var(--color-text-tertiary-dark)]">
+          {results.length} result{results.length !== 1 ? "s" : ""} for &quot;{query}&quot;
         </p>
       )}
 
-      {results.map((post) => (
-        <PostCard key={post.slug} post={post} />
-      ))}
+      {results.length > 0 && (
+        <div className="border-t border-[var(--color-border-primary)] dark:border-[var(--color-border-primary-dark)]">
+          {results.map((post) => (
+            <PostCard key={post.slug} post={post} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
 
 export default function SearchPage() {
-  // In a real setup, you'd fetch posts server-side and pass them
-  // For now we'll use a dynamic import approach
   const [posts, setPosts] = useState<PostMeta[]>([]);
   const [loaded, setLoaded] = useState(false);
 
   if (!loaded) {
-    // Fetch posts from an API route
     fetch("/api/posts")
       .then((res) => res.json())
       .then((data) => {

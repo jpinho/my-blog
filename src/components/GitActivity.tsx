@@ -116,15 +116,15 @@ export default function GitActivity() {
         </h3>
 
         {/* GitLab Contribution Graph */}
-        <div className="p-6 rounded-lg bg-[var(--color-surface-elevated)] dark:bg-[var(--color-surface-elevated-dark)] border border-[var(--color-border-secondary)] dark:border-[var(--color-border-secondary-dark)]">
+        <div className="p-4 sm:p-6 rounded-lg bg-[var(--color-surface-elevated)] dark:bg-[var(--color-surface-elevated-dark)] border border-[var(--color-border-secondary)] dark:border-[var(--color-border-secondary-dark)] overflow-hidden">
           <div className="space-y-4">
             <GitLabHeatmap />
-            <div className="flex justify-between items-center px-4">
-              <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 px-0 sm:px-4">
+              <div className="flex gap-2 items-baseline">
                 <span className="text-2xl font-bold text-[var(--color-primary)]">
                   {gitlabSummary?.total_commits || '1,200+'}
                 </span>
-                <span className="text-sm text-[var(--color-text-tertiary)] self-end pb-0.5">
+                <span className="text-sm text-[var(--color-text-tertiary)]">
                   commits in the last year
                 </span>
               </div>
@@ -171,7 +171,7 @@ export default function GitActivity() {
         </h3>
 
         {/* GitHub Contribution Graph */}
-        <div className="p-6 rounded-lg bg-[var(--color-surface-elevated)] dark:bg-[var(--color-surface-elevated-dark)] border border-[var(--color-border-secondary)] dark:border-[var(--color-border-secondary-dark)]">
+        <div className="p-4 sm:p-6 rounded-lg bg-[var(--color-surface-elevated)] dark:bg-[var(--color-surface-elevated-dark)] border border-[var(--color-border-secondary)] dark:border-[var(--color-border-secondary-dark)] overflow-hidden">
           <div className="w-full overflow-x-auto">
             <div className="min-w-[700px]">
               <img

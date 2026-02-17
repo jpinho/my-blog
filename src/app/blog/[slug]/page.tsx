@@ -87,19 +87,23 @@ export default async function PostPage({ params }: PageProps) {
           {post.title}
         </h1>
 
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-[var(--color-text-tertiary)] dark:text-[var(--color-text-tertiary-dark)]">
+        <div className="flex flex-wrap items-center gap-x-2 gap-y-2 text-sm text-[var(--color-text-tertiary)] dark:text-[var(--color-text-tertiary-dark)]">
           <time>{formatDateCompact(post.date)}</time>
-          <span>{siteConfig.author}</span>
+          <span className="text-[var(--color-border-primary)] dark:text-[var(--color-border-primary-dark)]">&middot;</span>
+          <Link href="/about" className="hover:text-[var(--color-text-primary)] dark:hover:text-[var(--color-text-primary-dark)] transition-colors">
+            {siteConfig.author}
+          </Link>
+          <span className="text-[var(--color-border-primary)] dark:text-[var(--color-border-primary-dark)]">&middot;</span>
           <span>{post.readingTime}</span>
         </div>
 
         {post.tags.length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-2">
+          <div className="mt-5 flex flex-wrap gap-2">
             {post.tags.map((tag) => (
               <Link
                 key={tag}
                 href={`/tags/${tag}`}
-                className="text-xs text-[var(--color-text-tertiary)] hover:text-[var(--color-primary)] dark:text-[var(--color-text-tertiary-dark)] dark:hover:text-[var(--color-primary-dark)] transition-colors"
+                className="inline-flex items-center rounded-full border border-[var(--color-border-primary)] dark:border-[var(--color-border-primary-dark)] px-3 py-1 text-xs text-[var(--color-text-tertiary)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-text-tertiary)] dark:text-[var(--color-text-tertiary-dark)] dark:hover:text-[var(--color-text-primary-dark)] dark:hover:border-[var(--color-text-tertiary-dark)] transition-colors"
               >
                 {tag}
               </Link>
@@ -108,7 +112,7 @@ export default async function PostPage({ params }: PageProps) {
         )}
 
         {/* Share links */}
-        <div className="mt-4 flex items-center gap-4 text-sm">
+        <div className="mt-5 flex items-center gap-4 text-sm">
           <a
             href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(postUrl)}`}
             target="_blank"

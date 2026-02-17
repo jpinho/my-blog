@@ -23,7 +23,7 @@ export default function PostCard({ post }: { post: PostMeta }) {
             </p>
           )}
 
-          <div className="mt-2.5 flex flex-wrap items-center gap-3">
+          <div className="mt-3 flex flex-wrap items-center gap-2">
             <span className="text-xs text-[var(--color-text-tertiary)] dark:text-[var(--color-text-tertiary-dark)]">
               {post.readingTime}
             </span>
@@ -32,7 +32,7 @@ export default function PostCard({ post }: { post: PostMeta }) {
                 {post.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="text-xs text-[var(--color-text-tertiary)] dark:text-[var(--color-text-tertiary-dark)]"
+                    className="inline-flex items-center rounded-full border border-[var(--color-border-primary)] dark:border-[var(--color-border-primary-dark)] px-2.5 py-0.5 text-xs text-[var(--color-text-tertiary)] dark:text-[var(--color-text-tertiary-dark)]"
                   >
                     {tag}
                   </span>

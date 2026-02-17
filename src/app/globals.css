@@ -14,29 +14,29 @@
 
   /* Background System */
   --color-bg: #ffffff;
-  --color-bg-dark: #0a0a0a;
+  --color-bg-dark: #0b0e11;
   --color-bg-secondary: #f6f9fc;
-  --color-bg-secondary-dark: #111111;
+  --color-bg-secondary-dark: #12161b;
   --color-surface: #ffffff;
-  --color-surface-dark: #0a0a0a;
+  --color-surface-dark: #0b0e11;
   --color-surface-elevated: #f6f9fc;
-  --color-surface-elevated-dark: #161616;
+  --color-surface-elevated-dark: #171b21;
 
   /* Typography Colors */
   --color-text-primary: #0a2540;
-  --color-text-primary-dark: #f6f9fc;
+  --color-text-primary-dark: #e6edf3;
   --color-text-secondary: #425466;
-  --color-text-secondary-dark: #adbdcc;
+  --color-text-secondary-dark: #9eaab7;
   --color-text-tertiary: #8898aa;
-  --color-text-tertiary-dark: #6b7c8f;
+  --color-text-tertiary-dark: #6b7685;
   --color-text-quaternary: #adbdcc;
   --color-text-quaternary-dark: #425466;
 
   /* Border System */
   --color-border-primary: #e3e8ee;
-  --color-border-primary-dark: #1e1e1e;
+  --color-border-primary-dark: #252b33;
   --color-border-secondary: #f0f3f7;
-  --color-border-secondary-dark: #1a1a1a;
+  --color-border-secondary-dark: #1e232a;
 
   /* Interactive States */
   --color-hover-light: rgba(10, 37, 64, 0.04);

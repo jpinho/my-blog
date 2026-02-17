@@ -31,7 +31,7 @@ export default function TagsPage() {
             <Link
               key={tag.name}
               href={`/tags/${tag.name}`}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] border border-[var(--color-border-primary)] hover:border-[var(--color-primary)] rounded-md transition-colors dark:text-[var(--color-text-secondary-dark)] dark:hover:text-[var(--color-text-primary-dark)] dark:border-[var(--color-border-primary-dark)] dark:hover:border-[var(--color-primary-dark)]"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] border border-[var(--color-border-primary)] hover:border-[var(--color-text-tertiary)] rounded-full transition-colors dark:text-[var(--color-text-secondary-dark)] dark:hover:text-[var(--color-text-primary-dark)] dark:border-[var(--color-border-primary-dark)] dark:hover:border-[var(--color-text-tertiary-dark)]"
             >
               {tag.name}
               <span className="text-xs text-[var(--color-text-tertiary)] dark:text-[var(--color-text-tertiary-dark)]">

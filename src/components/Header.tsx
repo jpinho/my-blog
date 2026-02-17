@@ -45,7 +45,7 @@ export default function Header() {
   }, [handleKeyPress]);
 
   return (
-    <header className="sticky top-0 z-50 bg-[var(--color-bg)]/95 backdrop-blur-sm border-b border-[var(--color-border-primary)] dark:bg-[var(--color-bg-dark)]/95 dark:border-[var(--color-border-primary-dark)]">
+    <header className="sticky top-0 z-50 bg-[var(--color-bg)]/95 backdrop-blur-md border-b border-[var(--color-border-primary)] dark:bg-[var(--color-bg-dark)]/90 dark:border-[var(--color-border-primary-dark)]">
       <div className="mx-auto flex max-w-[960px] items-center justify-between px-6 py-4">
         <Link
           href="/"
@@ -81,7 +81,7 @@ export default function Header() {
                   : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] dark:text-[var(--color-text-secondary-dark)] dark:hover:text-[var(--color-text-primary-dark)]"
               }`}
             >
-              <span className="kbd opacity-0 group-hover:opacity-100 transition-opacity">[{link.shortcut}]</span>
+              <span className="kbd">[{link.shortcut}]</span>
               {link.label}
             </Link>
           ))}

@@ -6,6 +6,11 @@ export function formatDate(dateString: string): string {
   });
 }
 
+export function formatDateCompact(dateString: string): string {
+  const d = new Date(dateString);
+  return `${d.getFullYear()}.${d.getMonth() + 1}.${String(d.getDate()).padStart(2, "0")}`;
+}
+
 export function slugify(text: string): string {
   return text
     .toLowerCase()

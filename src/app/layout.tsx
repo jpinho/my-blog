@@ -37,12 +37,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className="flex min-h-screen flex-col font-sans antialiased"
-      >
+      <body className="flex min-h-screen flex-col font-sans antialiased">
         <ThemeProvider>
           <Header />
-          <main className="mx-auto w-full max-w-4xl flex-1 px-6 py-12 lg:px-8">
+          <main className="mx-auto w-full max-w-[960px] flex-1 px-6 py-12">
             {children}
           </main>
           <Footer />

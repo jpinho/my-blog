@@ -72,10 +72,10 @@ export default function GitLabHeatmap() {
   }
 
   return (
-    <div className="w-full">
-      <div className="flex gap-0.5">
+    <div className="w-full overflow-x-auto">
+      <div className="inline-flex gap-0.5 min-w-0">
         {/* Day labels */}
-        <div className="flex flex-col gap-0.5 pr-1 text-[10px] text-gray-500 dark:text-gray-400">
+        <div className="flex flex-col gap-0.5 pr-1 text-[10px] text-gray-500 dark:text-gray-400 shrink-0">
           <div className="h-2.5"></div>
           <div className="h-2.5 leading-[10px]">Mon</div>
           <div className="h-2.5"></div>
@@ -86,25 +86,23 @@ export default function GitLabHeatmap() {
         </div>
 
         {/* Contribution grid */}
-        <div className="flex-1">
-          <div className="flex gap-0.5">
-            {weeks.slice(-52).map((week, weekIndex) => (
-              <div key={weekIndex} className="flex flex-col gap-0.5">
-                {[0, 1, 2, 3, 4, 5, 6].map((dayIndex) => {
-                  const day = week.find(d => new Date(d.date).getDay() === dayIndex);
-                  return (
-                    <div
-                      key={dayIndex}
-                      className={`w-2.5 h-2.5 rounded-[2px] ${
-                        day ? getIntensity(day.count) : 'bg-transparent'
-                      }`}
-                      title={day ? `${day.date}: ${day.count} contributions` : ''}
-                    />
-                  );
-                })}
-              </div>
-            ))}
-          </div>
+        <div className="flex gap-0.5">
+          {weeks.slice(-52).map((week, weekIndex) => (
+            <div key={weekIndex} className="flex flex-col gap-0.5">
+              {[0, 1, 2, 3, 4, 5, 6].map((dayIndex) => {
+                const day = week.find(d => new Date(d.date).getDay() === dayIndex);
+                return (
+                  <div
+                    key={dayIndex}
+                    className={`w-2.5 h-2.5 rounded-[2px] ${
+                      day ? getIntensity(day.count) : 'bg-transparent'
+                    }`}
+                    title={day ? `${day.date}: ${day.count} contributions` : ''}
+                  />
+                );
+              })}
+            </div>
+          ))}
         </div>
       </div>
 

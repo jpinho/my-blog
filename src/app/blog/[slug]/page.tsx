@@ -5,9 +5,9 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
 import rehypeHighlight from "rehype-highlight";
-import { ArrowLeft, Calendar, Clock, Tag } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { getAllPosts, getPostBySlug } from "@/lib/posts";
-import { formatDate } from "@/lib/utils";
+import { formatDateCompact } from "@/lib/utils";
 import { siteConfig } from "@/lib/config";
 import YouTubeEmbed from "@/components/YouTubeEmbed";
 import { YouTube } from "@/components/YouTubeEmbed";
@@ -72,54 +72,67 @@ export default async function PostPage({ params }: PageProps) {
 
   return (
     <article className="animate-fade-in">
-      {/* Back button */}
+      {/* Back link */}
       <Link
         href="/blog"
-        className="inline-flex items-center gap-2 text-sm text-[var(--color-text-tertiary)] hover:text-[var(--color-text-primary)] transition-colors mb-8 dark:text-[var(--color-text-tertiary-dark)] dark:hover:text-[var(--color-text-primary-dark)]"
+        className="inline-flex items-center gap-1.5 text-sm text-[var(--color-text-tertiary)] hover:text-[var(--color-text-primary)] transition-colors mb-10 dark:text-[var(--color-text-tertiary-dark)] dark:hover:text-[var(--color-text-primary-dark)]"
       >
-        <ArrowLeft size={16} />
-        Back to posts
+        <ArrowLeft size={14} />
+        Blog
       </Link>
 
-      {/* Post header */}
-      <header className="mb-12">
-        <h1 className="text-4xl font-bold tracking-tight text-[var(--color-text-primary)] dark:text-[var(--color-text-primary-dark)] sm:text-5xl mb-4 animate-slide-in">
+      {/* Article header */}
+      <header className="mb-10">
+        <h1 className="text-3xl font-bold tracking-tight text-[var(--color-text-primary)] dark:text-[var(--color-text-primary-dark)] sm:text-4xl leading-tight mb-6">
           {post.title}
         </h1>
 
-        {post.description && (
-          <p className="text-xl text-[var(--color-text-secondary)] dark:text-[var(--color-text-secondary-dark)] leading-relaxed mb-6">
-            {post.description}
-          </p>
-        )}
-
-        <div className="flex flex-wrap items-center gap-4 text-sm text-[var(--color-text-tertiary)] dark:text-[var(--color-text-tertiary-dark)]">
-          <span className="flex items-center gap-2">
-            <Calendar size={14} />
-            {formatDate(post.date)}
-          </span>
-          <span className="flex items-center gap-2">
-            <Clock size={14} />
-            {post.readingTime}
-          </span>
+        <div className="flex flex-wrap items-center gap-x-2 gap-y-2 text-sm text-[var(--color-text-tertiary)] dark:text-[var(--color-text-tertiary-dark)]">
+          <time>{formatDateCompact(post.date)}</time>
+          <span className="text-[var(--color-border-primary)] dark:text-[var(--color-border-primary-dark)]">&middot;</span>
+          <Link href="/about" className="hover:text-[var(--color-text-primary)] dark:hover:text-[var(--color-text-primary-dark)] transition-colors">
+            {siteConfig.author}
+          </Link>
+          <span className="text-[var(--color-border-primary)] dark:text-[var(--color-border-primary-dark)]">&middot;</span>
+          <span>{post.readingTime}</span>
         </div>
 
         {post.tags.length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-2">
+          <div className="mt-5 flex flex-wrap gap-2">
             {post.tags.map((tag) => (
-              <span
+              <Link
                 key={tag}
-                className="inline-flex items-center gap-1 rounded-lg bg-[var(--color-bg-secondary)] px-2.5 py-1 text-xs font-medium text-[var(--color-text-tertiary)] transition-colors hover:bg-[var(--color-primary)] hover:text-white dark:bg-[var(--color-bg-secondary-dark)] dark:text-[var(--color-text-tertiary-dark)] dark:hover:bg-[var(--color-primary-dark)]"
+                href={`/tags/${tag}`}
+                className="inline-flex items-center rounded-full border border-[var(--color-border-primary)] dark:border-[var(--color-border-primary-dark)] px-3 py-1 text-xs text-[var(--color-text-tertiary)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-text-tertiary)] dark:text-[var(--color-text-tertiary-dark)] dark:hover:text-[var(--color-text-primary-dark)] dark:hover:border-[var(--color-text-tertiary-dark)] transition-colors"
               >
-                <Tag size={12} />
                 {tag}
-              </span>
+              </Link>
             ))}
           </div>
         )}
+
+        {/* Share links */}
+        <div className="mt-5 flex items-center gap-4 text-sm">
+          <a
+            href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(postUrl)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[var(--color-text-tertiary)] hover:text-[var(--color-text-primary)] dark:text-[var(--color-text-tertiary-dark)] dark:hover:text-[var(--color-text-primary-dark)] transition-colors"
+          >
+            X
+          </a>
+          <a
+            href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(postUrl)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[var(--color-text-tertiary)] hover:text-[var(--color-text-primary)] dark:text-[var(--color-text-tertiary-dark)] dark:hover:text-[var(--color-text-primary-dark)] transition-colors"
+          >
+            LinkedIn
+          </a>
+        </div>
       </header>
 
-      <div className="h-px bg-[var(--color-border-primary)] dark:bg-[var(--color-border-primary-dark)] mb-12"></div>
+      <div className="h-px bg-[var(--color-border-primary)] dark:bg-[var(--color-border-primary-dark)] mb-10"></div>
 
       {/* Audio Player */}
       {post.audioUrl && (
@@ -130,25 +143,27 @@ export default async function PostPage({ params }: PageProps) {
         />
       )}
 
-      {/* Post content */}
+      {/* Article content */}
       <div className="prose prose-lg max-w-none dark:prose-invert
-        prose-h2:text-2xl prose-h2:font-bold prose-h2:tracking-tight prose-h2:mt-12 prose-h2:mb-4
-        prose-h3:text-xl prose-h3:font-semibold prose-h3:mt-8 prose-h3:mb-3
-        prose-p:text-[var(--color-text-primary)] prose-p:leading-relaxed prose-p:mb-6
+        prose-h2:text-xl prose-h2:font-semibold prose-h2:tracking-tight prose-h2:mt-10 prose-h2:mb-4
+        prose-h3:text-lg prose-h3:font-semibold prose-h3:mt-8 prose-h3:mb-3
+        prose-p:text-[var(--color-text-secondary)] prose-p:leading-relaxed prose-p:mb-5
         prose-a:text-[var(--color-primary)] prose-a:no-underline hover:prose-a:underline
         prose-strong:text-[var(--color-text-primary)] prose-strong:font-semibold
-        prose-ul:my-6 prose-li:text-[var(--color-text-primary)]
-        prose-ol:my-6
-        prose-blockquote:border-l-4 prose-blockquote:border-[var(--color-primary)] prose-blockquote:pl-4 prose-blockquote:italic
-        prose-code:bg-[var(--color-bg-secondary)] prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm
-        prose-pre:bg-[var(--color-surface-elevated)] prose-pre:border prose-pre:border-[var(--color-border-secondary)]
-        dark:prose-p:text-[var(--color-text-primary-dark)]
+        prose-ul:my-5 prose-li:text-[var(--color-text-secondary)]
+        prose-ol:my-5
+        prose-blockquote:border-l-2 prose-blockquote:border-[var(--color-border-primary)] prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-[var(--color-text-tertiary)]
+        prose-code:bg-[var(--color-surface-elevated)] prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm
+        prose-pre:bg-[var(--color-surface-elevated)] prose-pre:border prose-pre:border-[var(--color-border-primary)]
+        prose-img:rounded-lg prose-img:border prose-img:border-[var(--color-border-primary)]
+        dark:prose-p:text-[var(--color-text-secondary-dark)]
         dark:prose-strong:text-[var(--color-text-primary-dark)]
-        dark:prose-li:text-[var(--color-text-primary-dark)]
+        dark:prose-li:text-[var(--color-text-secondary-dark)]
         dark:prose-a:text-[var(--color-primary-dark)]
-        dark:prose-blockquote:border-[var(--color-primary-dark)]
-        dark:prose-code:bg-[var(--color-bg-secondary-dark)]
-        dark:prose-pre:bg-[var(--color-surface-elevated-dark)] dark:prose-pre:border-[var(--color-border-secondary-dark)]"
+        dark:prose-blockquote:border-[var(--color-border-primary-dark)] dark:prose-blockquote:text-[var(--color-text-tertiary-dark)]
+        dark:prose-code:bg-[var(--color-surface-elevated-dark)]
+        dark:prose-pre:bg-[var(--color-surface-elevated-dark)] dark:prose-pre:border-[var(--color-border-primary-dark)]
+        dark:prose-img:border-[var(--color-border-primary-dark)]"
       >
         <MDXRemote
           source={post.content}
@@ -157,29 +172,17 @@ export default async function PostPage({ params }: PageProps) {
         />
       </div>
 
-      {/* Share section */}
+      {/* Author section */}
       <div className="mt-16 pt-8 border-t border-[var(--color-border-primary)] dark:border-[var(--color-border-primary-dark)]">
         <p className="text-sm text-[var(--color-text-tertiary)] dark:text-[var(--color-text-tertiary-dark)]">
-          Share this post:
+          Written by{" "}
+          <Link
+            href="/about"
+            className="text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] dark:text-[var(--color-text-secondary-dark)] dark:hover:text-[var(--color-text-primary-dark)] transition-colors"
+          >
+            {siteConfig.author}
+          </Link>
         </p>
-        <div className="mt-4 flex gap-4">
-          <a
-            href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(postUrl)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors dark:text-[var(--color-text-secondary-dark)] dark:hover:text-[var(--color-primary-dark)]"
-          >
-            Twitter
-          </a>
-          <a
-            href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(postUrl)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors dark:text-[var(--color-text-secondary-dark)] dark:hover:text-[var(--color-primary-dark)]"
-          >
-            LinkedIn
-          </a>
-        </div>
       </div>
     </article>
   );

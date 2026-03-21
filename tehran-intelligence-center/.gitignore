@@ -1,0 +1,4 @@
+# Ignore build output and deps
+node_modules/
+build/
+.svelte-kit/

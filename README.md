@@ -6,7 +6,7 @@
 [![MDX](https://img.shields.io/badge/MDX-3.0-yellow?style=flat-square&logo=mdx)](https://mdxjs.com)
 [![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=flat-square&logo=vercel)](https://vercel.com)
 
-> Distinguished Engineer's thoughts on AI, distributed systems, and the evolving craft of software engineering. Where code meets philosophy, and technical excellence meets business reality.
+> Here you can find my thoughts on AI, distributed systems, and the evolving craft of software engineering. Where code meets philosophy, and technical excellence meets business reality.
 
 ## 🎯 Philosophy
 
